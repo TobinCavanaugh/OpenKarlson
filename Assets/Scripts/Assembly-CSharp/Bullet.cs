@@ -122,6 +122,9 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         this.rb = base.GetComponent<Rigidbody>();
+        manager = GameObject.Find("Managers").transform.GetChild(0).GetComponent<PrefabManager>();
+        movement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        audioManager =GameObject.Find("Managers").transform.GetChild(0).GetComponent<AudioManager>();
     }
 
     private void Update()

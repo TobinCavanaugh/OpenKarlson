@@ -165,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
     public float slideForce = 400;
 
     public Game game;
+    public CameraShaker cameraShake;
 
     public static PlayerMovement Instance
     {
@@ -185,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
     private void CameraShake()
     {
         float single = this.rb.velocity.magnitude / 9f;
-        CameraShaker.Instance.ShakeOnce(single, 0.1f * single, 0.25f, 0.2f);
+        cameraShake.ShakeOnce(single, 0.1f * single, 0.25f, 0.2f);
         base.Invoke("CameraShake", 0.2f);
     }
 
@@ -573,7 +574,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        CameraShaker.Instance.ShakeOnce(3f * GameState.Instance.cameraShake, 2f, 0.1f, 0.6f);
+        cameraShake.ShakeOnce(3f * GameState.Instance.cameraShake, 2f, 0.1f, 0.6f);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         UIManger.Instance.DeadUI(true);
