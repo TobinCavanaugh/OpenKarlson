@@ -37,6 +37,8 @@ public class Grappler : Pickup
 
     private PlayerMovement playerMovement;
 
+    public float range = 70f;
+
     private void DrawGrapple()
     {
         if (!grappling)
@@ -45,6 +47,11 @@ public class Grappler : Pickup
             return;
         } 
 
+        if(grapplePoint == Vector3.zero){
+            Debug.Log("out o range");
+            lr.enabled = false;
+            return;
+        }
         if(lr.positionCount > 2){
             lr.positionCount = 2;
         }
@@ -109,7 +116,7 @@ public class Grappler : Pickup
             return;
         }
         Transform playerCamTransform = playerMovement.GetPlayerCamTransform();
-        List<RaycastHit> list = Physics.RaycastAll(playerCamTransform.position, playerCamTransform.forward, 70f, whatIsGround).ToList<RaycastHit>();
+        List<RaycastHit> list = Physics.RaycastAll(playerCamTransform.position, playerCamTransform.forward, range, whatIsGround).ToList<RaycastHit>();
         if (list.Count > 0)
         {
             aim.SetActive(false);
@@ -129,7 +136,7 @@ public class Grappler : Pickup
                 float single2 = Mathf.Cos(single1);
                 float single3 = Mathf.Sin(single1);
                 Vector3 vector3 = (playerCamTransform.right * single2) + (playerCamTransform.up * single3);
-                list.AddRange(Physics.RaycastAll(playerCamTransform.position, playerCamTransform.forward + ((vector3 * single) * (float)num2), 70f, whatIsGround));
+                list.AddRange(Physics.RaycastAll(playerCamTransform.position, playerCamTransform.forward + ((vector3 * single) * (float)num2), range, whatIsGround));
             }
             if (list.Count <= 0)
             {
@@ -181,10 +188,9 @@ public class Grappler : Pickup
         grappling = true;
         Transform playerCamTransform = playerMovement.GetPlayerCamTransform();
         Transform instance = playerMovement.transform;
-        RaycastHit[] raycastHitArray = Physics.RaycastAll(playerCamTransform.position, playerCamTransform.forward, 70f, whatIsGround);
-        if ((int)raycastHitArray.Length >= 1)
-        {
-            grapplePoint = raycastHitArray[0].point;
+        RaycastHit hit;        
+        if(Physics.Raycast(playerCamTransform.position, playerCamTransform.forward, out hit, range, whatIsGround)){
+            grapplePoint = hit.point;
         }
         else
         {
@@ -207,5 +213,7 @@ public class Grappler : Pickup
         offsetMultiplier = 2f;
         lr.positionCount = positions;
         AudioManager.Instance.PlayPitched("Grapple", 0.2f);
+
+        Debug.Log("use");
     }
 }
