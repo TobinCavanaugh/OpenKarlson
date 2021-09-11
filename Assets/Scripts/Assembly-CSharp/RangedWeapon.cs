@@ -23,13 +23,15 @@ public class RangedWeapon : Weapon
 
     private Collider[] projectileColliders;
 
+    private PlayerMovement movement;
+
     public RangedWeapon()
     {
     }
 
     private void GetReady()
     {
-        base.readyToUse = true;
+        readyToUse = true;
     }
 
     public override void OnAim()
@@ -43,7 +45,7 @@ public class RangedWeapon : Weapon
     private void RemoveCollisionWithPlayer()
     {
         Collider[] colliderArray;
-        colliderArray = (!this.player ? base.transform.root.GetComponentsInChildren<Collider>() : new Collider[] { PlayerMovement.Instance.GetPlayerCollider() });
+        colliderArray = (!this.player ? transform.root.GetComponentsInChildren<Collider>() : new Collider[] { movement.GetPlayerCollider() });
         for (int i = 0; i < (int)colliderArray.Length; i++)
         {
             for (int j = 0; j < (int)this.projectileColliders.Length; j++)
@@ -60,16 +62,16 @@ public class RangedWeapon : Weapon
         List<Collider> colliders = new List<Collider>();
         if (this.player)
         {
-            PlayerMovement.Instance.GetRb().AddForce(base.transform.right * this.boostRecoil, ForceMode.Impulse);
+            movement.GetRb().AddForce(transform.right * this.boostRecoil, ForceMode.Impulse);
         }
         for (int i = 0; i < this.bullets; i++)
         {
             Object.Instantiate<GameObject>(PrefabManager.Instance.muzzle, vector3, Quaternion.identity);
-            GameObject gameObject = Object.Instantiate<GameObject>(this.projectile, vector3, base.transform.rotation);
+            GameObject gameObject = Object.Instantiate<GameObject>(this.projectile, vector3, transform.rotation);
             Rigidbody componentInChildren = gameObject.GetComponentInChildren<Rigidbody>();
             this.projectileColliders = gameObject.GetComponentsInChildren<Collider>();
             this.RemoveCollisionWithPlayer();
-            componentInChildren.transform.rotation = base.transform.rotation;
+            componentInChildren.transform.rotation = transform.rotation;
             Vector3 vector32 = vector31 + (this.guntip.transform.up * UnityEngine.Random.Range(-this.accuracy, this.accuracy)) + (this.guntip.transform.forward * UnityEngine.Random.Range(-this.accuracy, this.accuracy));
             componentInChildren.AddForce(componentInChildren.mass * this.force * vector32);
             Bullet component = (Bullet)gameObject.GetComponent(typeof(Bullet));
@@ -78,7 +80,7 @@ public class RangedWeapon : Weapon
                 Color color = Color.red;
                 if (!this.player)
                 {
-                    Object.Instantiate<GameObject>(PrefabManager.Instance.gunShotAudio, base.transform.position, Quaternion.identity);
+                    Object.Instantiate<GameObject>(PrefabManager.Instance.gunShotAudio, transform.position, Quaternion.identity);
                 }
                 else
                 {
@@ -92,7 +94,7 @@ public class RangedWeapon : Weapon
                     }
                     else
                     {
-                        Object.Instantiate<GameObject>(PrefabManager.Instance.thumpAudio, base.transform.position, Quaternion.identity);
+                        Object.Instantiate<GameObject>(PrefabManager.Instance.thumpAudio, transform.position, Quaternion.identity);
                     }
                     componentInChildren.AddForce(componentInChildren.mass * this.force * vector32);
                 }
@@ -109,9 +111,9 @@ public class RangedWeapon : Weapon
 
     private new void Start()
     {
-        base.Start();
-        this.rb = base.GetComponent<Rigidbody>();
-        this.guntip = base.transform.GetChild(0);
+        this.rb = GetComponent<Rigidbody>();
+        this.guntip = transform.GetChild(0);
+        movement = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
 
     public override void StopUse()
@@ -120,13 +122,13 @@ public class RangedWeapon : Weapon
 
     public override void Use(Vector3 attackDirection)
     {
-        if (!base.readyToUse || !base.pickedUp)
+        if (!readyToUse || !pickedUp)
         {
             return;
         }
         this.SpawnProjectile(attackDirection);
         this.Recoil();
-        base.readyToUse = false;
-        base.Invoke("GetReady", this.attackSpeed);
+        readyToUse = false;
+        Invoke("GetReady", attackSpeed);
     }
-}
+}///

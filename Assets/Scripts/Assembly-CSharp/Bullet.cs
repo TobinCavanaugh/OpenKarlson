@@ -48,9 +48,10 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (this.done)
-        {
+        { 
             return;
         }
+
         this.done = true;
         if (this.explosive)
         {
