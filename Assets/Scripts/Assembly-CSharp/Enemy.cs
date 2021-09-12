@@ -68,10 +68,10 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        Vector3 vector3 = this.target.transform.position - transform.position;
-        if (Vector3.Angle(transform.forward, vector3) > 70f)
+        Vector3 vector3 = this.target.transform.position - base.transform.position;
+        if (Vector3.Angle(base.transform.forward, vector3) > 70f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(vector3), Time.deltaTime * this.hipSpeed);
+            base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.LookRotation(vector3), Time.deltaTime * this.hipSpeed);
         }
         this.head.transform.rotation = Quaternion.Slerp(this.head.transform.rotation, Quaternion.LookRotation(vector3), Time.deltaTime * this.headAndHandSpeed);
         this.rightArm.transform.rotation = Quaternion.Slerp(this.head.transform.rotation, Quaternion.LookRotation(vector3), Time.deltaTime * this.headAndHandSpeed);
@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
         {
             this.gunScript.Use(this.target.position);
             this.readyToShoot = false;
-            Invoke("Cooldown", this.attackSpeed + UnityEngine.Random.Range(this.attackSpeed, this.attackSpeed * 5f));
+            base.Invoke("Cooldown", this.attackSpeed + UnityEngine.Random.Range(this.attackSpeed, this.attackSpeed * 5f));
         }
     }
 
@@ -112,9 +112,9 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        Vector3 vector3 = this.target.position - transform.position;
+        Vector3 vector3 = this.target.position - base.transform.position;
         Vector3 vector31 = vector3.normalized;
-        RaycastHit[] raycastHitArray = Physics.RaycastAll(transform.position + vector31, vector31, (float)this.objectsAndPlayer);
+        RaycastHit[] raycastHitArray = Physics.RaycastAll(base.transform.position + vector31, vector31, (float)this.objectsAndPlayer);
         if ((int)raycastHitArray.Length < 1)
         {
             return;
@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < (int)raycastHitArray.Length; i++)
         {
             int num = raycastHitArray[i].collider.gameObject.layer;
-            if (!(raycastHitArray[i].collider.transform.root.gameObject.name == gameObject.name) && num != LayerMask.NameToLayer("TransparentFX"))
+            if (!(raycastHitArray[i].collider.transform.root.gameObject.name == base.gameObject.name) && num != LayerMask.NameToLayer("TransparentFX"))
             {
                 if (num == LayerMask.NameToLayer("Player"))
                 {
@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
             {
                 this.spottedPlayer = true;
             }
-            Invoke("TakeAim", UnityEngine.Random.Range(0.3f, 1f));
+            base.Invoke("TakeAim", UnityEngine.Random.Range(0.3f, 1f));
             this.takingAim = true;
             return;
         }
@@ -217,9 +217,9 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        this.ragdoll = (RagdollController)GetComponent(typeof(RagdollController));
-        this.animator = GetComponentInChildren<Animator>();
-        this.agent = GetComponent<NavMeshAgent>();
+        this.ragdoll = (RagdollController)base.GetComponent(typeof(RagdollController));
+        this.animator = base.GetComponentInChildren<Animator>();
+        this.agent = base.GetComponent<NavMeshAgent>();
         this.GiveGun();
     }
 
@@ -227,11 +227,11 @@ public class Enemy : MonoBehaviour
     {
         this.animator.SetBool("Running", false);
         this.animator.SetBool("Aiming", true);
-        CancelInvoke();
-        Invoke("Cooldown", UnityEngine.Random.Range(0.3f, 1f));
+        base.CancelInvoke();
+        base.Invoke("Cooldown", UnityEngine.Random.Range(0.3f, 1f));
         if (this.agent && this.agent.isOnNavMesh)
         {
-            this.agent.destination = transform.position;
+            this.agent.destination = base.transform.position;
         }
     }
 }

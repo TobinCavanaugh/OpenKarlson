@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour
     public PrefabManager manager;
 
     public PlayerMovement movement;
+    
     public AudioManager audioManager;
 
     public Bullet()

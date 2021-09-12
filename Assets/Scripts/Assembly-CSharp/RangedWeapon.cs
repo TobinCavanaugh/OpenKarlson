@@ -63,6 +63,7 @@ public class RangedWeapon : Weapon
         if (this.player)
         {
             movement.GetRb().AddForce(transform.right * this.boostRecoil, ForceMode.Impulse);
+            Debug.Log(movement.GetRb());
         }
         for (int i = 0; i < this.bullets; i++)
         {

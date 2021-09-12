@@ -38,7 +38,7 @@ public class RagdollController : MonoBehaviour
         GameObject gameObject = this.limbs[i];
         Rigidbody rigidbody = gameObject.AddComponent<Rigidbody>();
         rigidbody.mass = this.mass[i];
-        rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        //rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
         rigidbody.AddForce(dir);
         if (i != 0)
         {
