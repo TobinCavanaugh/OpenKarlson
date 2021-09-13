@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class EditorManager : MonoBehaviour
 {
-    public GameObject defaultObject;
+    public GameObject currentObject;
     public GameObject objectsParent;
     public Animator animator;
 
     [Header("Bools")]
-    public bool scaleMode = false;
-    public bool rotateMode = false;
-    //public bool selectMode = false;
+    public bool adjustMode = false;
     public bool buildMode = true;
 
     [Header("Switching Types")]
@@ -27,34 +25,16 @@ public class EditorManager : MonoBehaviour
         }
         selected += delta;
         Debug.Log(selected);
-        defaultObject = levelObjects[selected];
+        currentObject = levelObjects[selected];
     }
 
-    public void ScaleMode(){
-        scaleMode = true;
-        rotateMode = false;
-    //    selectMode = false;
+    public void AdjustMode(){
+        adjustMode = true;
         buildMode = false;
     }
-
-    public void RotateMode(){
-        scaleMode = false;
-        rotateMode = true;
-    //    selectMode = false;
-        buildMode = false;
-    }
-
-    //public void SelectMode(){
-    //    scaleMode = false;
-    //    rotateMode = false;
-    //    selectMode = true;
-    //    buildMode = false;
-    //}
 
     public void BuildMode(){
-        scaleMode = false;
-        rotateMode = false;
-    //    selectMode = false;
+        adjustMode = false;
         buildMode = true;
     }
 }

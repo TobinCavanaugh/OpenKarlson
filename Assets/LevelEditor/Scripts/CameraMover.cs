@@ -52,11 +52,9 @@ public class CameraMover : MonoBehaviour
             if (Physics.Raycast(ray, out hit, buildDist, buildMask)){            
                 if(editorManager.buildMode){
                     Debug.Log(hit.transform.gameObject.GetComponent<EditorObject>());
-                    hit.transform.gameObject.GetComponent<EditorObject>().InstantiateObject(hit, new Vector3(1, 1, 1), zAxisRot);
-                } else if(editorManager.rotateMode){
+                    InstantiateObject(hit);
+                } else if(editorManager.adjustMode){
                     //Rotate
-                } else if(editorManager.scaleMode){
-                    //Scale
                 }
             }
         }   
@@ -71,6 +69,21 @@ public class CameraMover : MonoBehaviour
         }
 
     }
+
+    void InstantiateObject(RaycastHit hit){
+
+        GameObject block = Instantiate(editorManager.currentObject, hit.transform.position + hit.normal, new Quaternion(0, 0, 0, 0));
+        block.transform.Rotate(new Vector3(0, zAxisRot, 0));
+        block.transform.parent = editorManager.objectsParent.transform;
+        
+        if(block.GetComponent<Collider>() == null){
+            block.AddComponent<BoxCollider>();
+        }
+
+        if(block.GetComponent<EditorObject>() == null){
+            block.AddComponent<EditorObject>();
+        }
+    } 
 
     /// <summary>
     ///  Returns a number
