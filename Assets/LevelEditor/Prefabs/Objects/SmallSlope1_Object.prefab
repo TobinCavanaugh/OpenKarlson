@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7701252272410600468}
   - component: {fileID: 1377267726319964810}
   - component: {fileID: 7357479195610779221}
-  - component: {fileID: 5951265293957753593}
+  - component: {fileID: 1597756482}
   m_Layer: 0
   m_Name: SmallSlope1
   m_TagString: Untagged
@@ -82,21 +82,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5951265293957753593
-MonoBehaviour:
+--- !u!64 &1597756482
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5951265293957753598}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5472d051ee7ade840a368a15e9705e6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selected: 0
-  index: 0
-  rotation: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 5574124f0e7ece14da79174edc4680df, type: 3}
 --- !u!1 &6420804638731405136
 GameObject:
   m_ObjectHideFlags: 0

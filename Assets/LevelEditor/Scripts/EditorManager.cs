@@ -6,6 +6,7 @@ public class EditorManager : MonoBehaviour
 {
     public GameObject currentObject;
     public GameObject objectsParent;
+    public GameObject selectedObj;
     public Animator animator;
 
     [Header("Bools")]
@@ -16,18 +17,9 @@ public class EditorManager : MonoBehaviour
     public int selected = 0;
     public GameObject[] levelObjects;
 
-
-
-
-    public void ChangeSelected(int delta){
-        if(selected + delta < 0 || selected + delta > levelObjects.Length - 1){
-            return;
-        }
-        selected += delta;
-        Debug.Log(selected);
-        currentObject = levelObjects[selected];
+    public void ChangeObject(GameObject switchObj){
+        currentObject = switchObj;
     }
-
     public void AdjustMode(){
         adjustMode = true;
         buildMode = false;

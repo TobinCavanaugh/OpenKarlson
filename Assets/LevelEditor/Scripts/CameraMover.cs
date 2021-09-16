@@ -15,6 +15,7 @@ public class CameraMover : MonoBehaviour
     public float zAxisRot = 0;
     [SerializeField]
     private int buildDist = 100;
+    public TransformModifier transformModifier;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +29,8 @@ public class CameraMover : MonoBehaviour
     {
         HandleInput();
 
-        
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, buildDist, camBoxMask)){
-
             zAxisRot = hit.transform.gameObject.GetComponent<CameraBoxCollider>().rotation;
         }
     }
@@ -47,14 +46,15 @@ public class CameraMover : MonoBehaviour
         if (Input.GetMouseButtonDown(0)){ // if left button pressed...
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
-        
+            
             if (Physics.Raycast(ray, out hit, buildDist, buildMask)){            
                 if(editorManager.buildMode){
                     Debug.Log(hit.transform.gameObject.GetComponent<EditorObject>());
                     InstantiateObject(hit);
-                } else if(editorManager.adjustMode){
-                    //Rotate
+                } else if(editorManager.adjustMode){                    
+                    editorManager.selectedObj = hit.transform.gameObject;
+                    Debug.Log(hit.transform.gameObject);
+                    transformModifier.UpdateDisplay();
                 }
             }
         }   
