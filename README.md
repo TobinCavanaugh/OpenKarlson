@@ -1,4 +1,5 @@
 # OpenKarlson
+# This project is no longer being supported
 ** For Educational Purposes only **
 
 <h2> Info: </h2>
@@ -10,5 +11,5 @@ Fownload the unity project > extract it somewhere safe > go to unity hub > press
 
 <h2> Suggestions, bug reports, etc </h2>
 At the moment, dont report bugs, the project is very volatile at the moment. 
-If you have suggestions, consider sending them in the #suggestions chat in our discord server: https://discord.gg/zdkur3nnqP
+If you have suggestions, consider sending them in the #suggestions chat in our discord server: [REMOVED]
 I'm new to github so send me a message in discord if you have recommendations or things you've made that you want to add
